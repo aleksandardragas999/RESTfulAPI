@@ -1,6 +1,8 @@
 
 
+using API.Data;
 using API.Logging;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,14 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
 
 builder.Host.UseSerilog();
 */
+
+//AddDbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
 builder.Services.AddControllers(options => 
 {
 //   // options.ReturnHttpNotAcceptable = true;//ako formati nije prihvatilj vratice odgovarajucu poruku o gresci dozvole
